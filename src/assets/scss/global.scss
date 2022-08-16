@@ -1,0 +1,41 @@
+$color-accent: #e2e1e4;
+$dark-accent: darken($color-accent, 10%);
+$back-container-background: #121212;
+$default-font-list: Inter, Avenir, Helvetica, Arial, sans-serif;
+
+* {
+  padding: 0;
+  margin: 0;
+  word-wrap: break-word;
+  box-sizing: border-box;
+}
+
+body {
+  background: $back-container-background;
+  font-family: $default-font-list;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased !important;
+  color: $color-accent;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  color: $color-accent;
+  text-decoration: none;
+  transition: color 0.3s;
+  &:hover {
+    color: $dark-accent;
+  }
+}
+
+.a-block {
+  display: block;
+  text-decoration: none !important;
+  &:hover {
+    text-decoration: none !important;
+  }
+}
