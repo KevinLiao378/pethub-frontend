@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { reactive, computed } from "vue";
-import { VueEternalLoading, LoadAction } from "@ts-pro/vue-eternal-loading";
+import { LoadAction, VueEternalLoading } from "@ts-pro/vue-eternal-loading";
+import { computed, reactive } from "vue";
 const URL = "https://pethub.fun/api/images/";
 const PAGE_SIZE = 80;
 let page = 0;
@@ -8,6 +8,7 @@ type Image = {
   id: number;
   title?: string;
   image_url: string;
+  is_new: boolean;
 };
 type PagedData = {
   next?: string;
@@ -74,7 +75,7 @@ async function load({ loaded, noMore }: LoadAction): Promise<void> {
     <div
       v-masonry
       fit-width="true"
-      transition-duration="0"
+      transition-duration="0.3s"
       item-selector=".grid-item"
       origin-left="false"
       gutter="12"
@@ -87,6 +88,7 @@ async function load({ loaded, noMore }: LoadAction): Promise<void> {
         class="grid-item"
       >
         <img :src="image.image_url" :alt="image.title" />
+        <span v-if="image.is_new" class="badge">new</span>
       </div>
     </div>
     <VueEternalLoading :load="load">
@@ -136,15 +138,29 @@ async function load({ loaded, noMore }: LoadAction): Promise<void> {
   .grid {
     margin: 0 auto;
     .grid-item {
-      max-width: 200px;
+      position: relative;
+      width: 200px;
       margin-bottom: 12px;
       border-radius: 5px;
       img {
-        cursor: hand;
+        display: block;
         width: 100%;
-        height: 100%;
+        height: auto;
         object-fit: cover;
         border-radius: 5px;
+      }
+      .badge {
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: #fff;
+        font-size: 10px;
+        height: 18px;
+        line-height: 18px;
+        padding: 0 2px;
+        background: rgb(180, 44, 44);
+        border-top-left-radius: 5px;
+        border-bottom-right-radius: 5px;
       }
     }
   }
